@@ -40,9 +40,8 @@ def _session(s: Session):
 
 class ModelRepository:
     def list(self, include_disabled: bool = True) -> list[ModelConfig]:
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                rows = s.scalars(select(ModelRecord)).all()
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            rows = s.scalars(select(ModelRecord)).all()
         out = []
         for r in rows:
             cfg = _record_to_model(r)
@@ -51,47 +50,43 @@ class ModelRepository:
         return out
 
     def get(self, model_id: str) -> ModelConfig | None:
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                row = s.get(ModelRecord, model_id)
-                return _record_to_model(row) if row else None
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            row = s.get(ModelRecord, model_id)
+            return _record_to_model(row) if row else None
 
     def upsert(self, cfg: ModelConfig) -> ModelConfig:
         now = datetime.utcnow()
         cfg.updated_at = now
         if cfg.created_at is None:
             cfg.created_at = now
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                row = s.get(ModelRecord, cfg.id)
-                if row is None:
-                    row = ModelRecord(id=cfg.id)
-                    s.add(row)
-                _apply_model_to_record(cfg, row)
-                s.commit()
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            row = s.get(ModelRecord, cfg.id)
+            if row is None:
+                row = ModelRecord(id=cfg.id)
+                s.add(row)
+            _apply_model_to_record(cfg, row)
+            s.commit()
         return cfg
 
     def delete(self, model_id: str) -> bool:
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                row = s.get(ModelRecord, model_id)
-                if row is None:
-                    return False
-                s.delete(row)
-                s.commit()
-                return True
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            row = s.get(ModelRecord, model_id)
+            if row is None:
+                return False
+            s.delete(row)
+            s.commit()
+            return True
 
     def record_health(self, model_id: str, health: dict) -> None:
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                row = s.get(ModelRecord, model_id)
-                if row is not None:
-                    row.last_health_check = json.dumps(
-                        {**health, "checked_at": datetime.utcnow().isoformat()}
-                    )
-                    row.supports_streaming = health.get("supports_streaming")
-                    row.reports_token_usage = health.get("reports_token_usage")
-                    s.commit()
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            row = s.get(ModelRecord, model_id)
+            if row is not None:
+                row.last_health_check = json.dumps(
+                    {**health, "checked_at": datetime.utcnow().isoformat()}
+                )
+                row.supports_streaming = health.get("supports_streaming")
+                row.reports_token_usage = health.get("reports_token_usage")
+                s.commit()
 
 
 def _engine():
@@ -143,35 +138,36 @@ def _apply_model_to_record(cfg: ModelConfig, r: ModelRecord) -> None:
     r.generation_params = json.dumps(cfg.generation_params)
     r.extra_headers = json.dumps(cfg.extra_headers)
     r.supports_streaming = None if cfg.supports_streaming is None else int(cfg.supports_streaming)
-    r.reports_token_usage = None if cfg.reports_token_usage is None else int(cfg.reports_token_usage)
+    r.reports_token_usage = (
+        None if cfg.reports_token_usage is None else int(cfg.reports_token_usage)
+    )
     r.updated_at = cfg.updated_at
 
 
 class RunRepository:
     def create(self, run: EvaluationRun) -> None:
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                s.add(
-                    EvaluationRunRecord(
-                        id=run.id,
-                        model_id=run.model_id,
-                        model_identifier=run.model_identifier,
-                        endpoint_label=run.endpoint_label,
-                        dataset_names=json.dumps(run.dataset_names),
-                        dataset_versions=json.dumps(run.dataset_versions),
-                        case_ids=json.dumps(run.case_ids),
-                        generation_params=json.dumps(run.generation_params),
-                        concurrency=run.concurrency,
-                        scoring_version=run.scoring_version,
-                        app_version=run.app_version,
-                        git_commit=run.git_commit,
-                        random_seed=run.random_seed,
-                        status=run.status,
-                        requested_at=run.requested_at or datetime.utcnow(),
-                        progress_total=run.progress_total,
-                    )
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            s.add(
+                EvaluationRunRecord(
+                    id=run.id,
+                    model_id=run.model_id,
+                    model_identifier=run.model_identifier,
+                    endpoint_label=run.endpoint_label,
+                    dataset_names=json.dumps(run.dataset_names),
+                    dataset_versions=json.dumps(run.dataset_versions),
+                    case_ids=json.dumps(run.case_ids),
+                    generation_params=json.dumps(run.generation_params),
+                    concurrency=run.concurrency,
+                    scoring_version=run.scoring_version,
+                    app_version=run.app_version,
+                    git_commit=run.git_commit,
+                    random_seed=run.random_seed,
+                    status=run.status,
+                    requested_at=run.requested_at or datetime.utcnow(),
+                    progress_total=run.progress_total,
                 )
-                s.commit()
+            )
+            s.commit()
 
     def update_status(self, run_id: str, **fields) -> None:
         serialised = {}
@@ -179,86 +175,82 @@ class RunRepository:
             if key in ("dataset_names", "case_ids", "generation_params", "dataset_versions"):
                 value = json.dumps(value)
             if key == "summary" and value is not None:
-                value = value.model_dump_json() if isinstance(value, RunSummary) else json.dumps(value)
+                value = (
+                    value.model_dump_json() if isinstance(value, RunSummary) else json.dumps(value)
+                )
             serialised[key] = value
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                row = s.get(EvaluationRunRecord, run_id)
-                if row is None:
-                    return
-                for key, value in serialised.items():
-                    setattr(row, key, value)
-                s.commit()
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            row = s.get(EvaluationRunRecord, run_id)
+            if row is None:
+                return
+            for key, value in serialised.items():
+                setattr(row, key, value)
+            s.commit()
 
     def cancel_requested(self, run_id: str) -> bool:
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                row = s.get(EvaluationRunRecord, run_id)
-                return bool(row and row.cancel_requested)
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            row = s.get(EvaluationRunRecord, run_id)
+            return bool(row and row.cancel_requested)
 
     def add_case_result(self, result: CaseResult) -> None:
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                s.merge(
-                    CaseResultRecord(
-                        run_id=result.run_id,
-                        case_id=result.case_id,
-                        dataset=result.dataset,
-                        status=result.status,
-                        score=result.score,
-                        weight=result.weight,
-                        field_results=json.dumps([f.model_dump() for f in result.field_results]),
-                        raw_response=result.raw_response,
-                        parsed_output=(
-                            json.dumps(result.parsed_output)
-                            if result.parsed_output is not None
-                            else None
-                        ),
-                        latency_ms=result.latency_ms,
-                        time_to_first_token_ms=result.time_to_first_token_ms,
-                        token_usage=result.token_usage.model_dump_json(),
-                        request_attempt=result.request_attempt,
-                        error=result.error,
-                        scoring_notes=result.scoring_notes,
-                        security_outcome=result.security_outcome,
-                        completed_at=result.completed_at or datetime.utcnow(),
-                    )
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            s.merge(
+                CaseResultRecord(
+                    run_id=result.run_id,
+                    case_id=result.case_id,
+                    dataset=result.dataset,
+                    status=result.status,
+                    score=result.score,
+                    weight=result.weight,
+                    field_results=json.dumps([f.model_dump() for f in result.field_results]),
+                    raw_response=result.raw_response,
+                    parsed_output=(
+                        json.dumps(result.parsed_output)
+                        if result.parsed_output is not None
+                        else None
+                    ),
+                    latency_ms=result.latency_ms,
+                    time_to_first_token_ms=result.time_to_first_token_ms,
+                    token_usage=result.token_usage.model_dump_json(),
+                    request_attempt=result.request_attempt,
+                    error=result.error,
+                    scoring_notes=result.scoring_notes,
+                    security_outcome=result.security_outcome,
+                    completed_at=result.completed_at or datetime.utcnow(),
                 )
-                s.commit()
+            )
+            s.commit()
 
     def _results_for(self, s: Session, run_id: str) -> list[CaseResult]:
         rows = s.scalars(select(CaseResultRecord).where(CaseResultRecord.run_id == run_id)).all()
         return [_case_from_record(r) for r in rows]
 
     def get(self, run_id: str) -> EvaluationRun | None:
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                row = s.get(EvaluationRunRecord, run_id)
-                if row is None:
-                    return None
-                results = self._results_for(s, run_id)
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            row = s.get(EvaluationRunRecord, run_id)
+            if row is None:
+                return None
+            results = self._results_for(s, run_id)
         return _run_from_record(row, progress_completed=len(results))
 
     def list(self, model_id: str | None = None, limit: int = 100) -> list[EvaluationRun]:
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                stmt = (
-                    select(EvaluationRunRecord)
-                    .order_by(EvaluationRunRecord.requested_at.desc())
-                    .limit(limit)
-                )
-                if model_id:
-                    stmt = stmt.where(EvaluationRunRecord.model_id == model_id)
-                rows = s.scalars(stmt).all()
-                counts: dict[str, int] = {}
-                for cr in s.scalars(select(CaseResultRecord)):
-                    counts[cr.run_id] = counts.get(cr.run_id, 0) + 1
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            stmt = (
+                select(EvaluationRunRecord)
+                .order_by(EvaluationRunRecord.requested_at.desc())
+                .limit(limit)
+            )
+            if model_id:
+                stmt = stmt.where(EvaluationRunRecord.model_id == model_id)
+            rows = s.scalars(stmt).all()
+            counts: dict[str, int] = {}
+            for cr in s.scalars(select(CaseResultRecord)):
+                counts[cr.run_id] = counts.get(cr.run_id, 0) + 1
         return [_run_from_record(r, counts.get(r.id, 0)) for r in rows]
 
     def case_results(self, run_id: str) -> list[CaseResult]:
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                return self._results_for(s, run_id)
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            return self._results_for(s, run_id)
 
 
 def _case_from_record(cr: CaseResultRecord) -> CaseResult:
@@ -320,11 +312,10 @@ def _attach_results(run: EvaluationRun, results: list[CaseResult]) -> Evaluation
 
 class AssessmentRepository:
     def get(self, model_id: str) -> EnterpriseAssessment | None:
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                row = s.get(AssessmentRecord, model_id)
-                if row is None:
-                    return None
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            row = s.get(AssessmentRecord, model_id)
+            if row is None:
+                return None
         return EnterpriseAssessment(
             model_id=row.model_id,
             items=[AssessmentItem(**i) for i in _loads(row.items, [])],
@@ -333,42 +324,39 @@ class AssessmentRepository:
         )
 
     def save(self, assessment: EnterpriseAssessment) -> None:
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                row = s.get(AssessmentRecord, assessment.model_id)
-                if row is None:
-                    row = AssessmentRecord(model_id=assessment.model_id)
-                    s.add(row)
-                row.items = json.dumps([i.model_dump() for i in assessment.items])
-                row.updated_at = datetime.utcnow()
-                row.updated_by = assessment.updated_by
-                s.commit()
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            row = s.get(AssessmentRecord, assessment.model_id)
+            if row is None:
+                row = AssessmentRecord(model_id=assessment.model_id)
+                s.add(row)
+            row.items = json.dumps([i.model_dump() for i in assessment.items])
+            row.updated_at = datetime.utcnow()
+            row.updated_by = assessment.updated_by
+            s.commit()
 
 
 class ReviewRepository:
     def add(self, review: HumanReview) -> int:
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                rec = HumanReviewRecord(
-                    model_id=review.model_id,
-                    reviewer=review.reviewer,
-                    review_date=review.review_date.isoformat(),
-                    assessment_notes=review.assessment_notes,
-                    outstanding_risks=json.dumps(review.outstanding_risks),
-                    required_mitigations=json.dumps(review.required_mitigations),
-                    recommended_next_steps=json.dumps(review.recommended_next_steps),
-                )
-                s.add(rec)
-                s.commit()
-                s.refresh(rec)
-                return int(rec.id)
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            rec = HumanReviewRecord(
+                model_id=review.model_id,
+                reviewer=review.reviewer,
+                review_date=review.review_date.isoformat(),
+                assessment_notes=review.assessment_notes,
+                outstanding_risks=json.dumps(review.outstanding_risks),
+                required_mitigations=json.dumps(review.required_mitigations),
+                recommended_next_steps=json.dumps(review.recommended_next_steps),
+            )
+            s.add(rec)
+            s.commit()
+            s.refresh(rec)
+            return int(rec.id)
 
     def for_model(self, model_id: str) -> list[HumanReview]:
-        with write_lock():
-            with _session(Session(bind=_engine())) as s:
-                rows = s.scalars(
-                    select(HumanReviewRecord).where(HumanReviewRecord.model_id == model_id)
-                ).all()
+        with write_lock(), _session(Session(bind=_engine())) as s:
+            rows = s.scalars(
+                select(HumanReviewRecord).where(HumanReviewRecord.model_id == model_id)
+            ).all()
         return [
             HumanReview(
                 model_id=r.model_id,

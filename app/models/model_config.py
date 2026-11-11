@@ -49,7 +49,11 @@ class ModelConfig(BaseModel):
         """Representation safe for logs, reports and API responses."""
         data = self.model_dump(mode="json")
         data["extra_headers"] = {
-            k: ("********" if "key" in k.lower() or "secret" in k.lower() or "token" in k.lower() else v)
+            k: (
+                "********"
+                if "key" in k.lower() or "secret" in k.lower() or "token" in k.lower()
+                else v
+            )
             for k, v in self.extra_headers.items()
         }
         return data

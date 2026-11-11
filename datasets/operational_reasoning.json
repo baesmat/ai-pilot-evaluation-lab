@@ -1,0 +1,650 @@
+[
+  {
+    "id": "OPS-001",
+    "dataset": "operational_reasoning",
+    "category": "prioritization",
+    "difficulty": "hard",
+    "evaluation_method": "rubric",
+    "context": "Monday 08:00 at site NLD-04: the MRI phantom failed its daily calibration. Screening scans are booked from Tuesday. The monitor visit is Thursday. The sponsor slide deck is due Friday. Calibration must pass before any participant scanning.",
+    "prompt": "In a few sentences, state what the site coordinator does first and why, and which items can wait.",
+    "rubric": [
+      {
+        "name": "puts the calibration failure first",
+        "weight": 0.4,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)calibrat|phantom"
+        }
+      },
+      {
+        "name": "ties the fix to the screening scans it blocks",
+        "weight": 0.3,
+        "check": {
+          "type": "contains",
+          "value": "screening"
+        }
+      },
+      {
+        "name": "explicitly defers a lower-priority item",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)thursday|friday|deck|monitor"
+        }
+      }
+    ],
+    "notes": "Deterministic checks only; the scenario has exactly one gating item (calibration) and the rest is ordering."
+  },
+  {
+    "id": "OPS-002",
+    "dataset": "operational_reasoning",
+    "category": "dependency",
+    "difficulty": "easy",
+    "evaluation_method": "rubric",
+    "context": "To enroll the first participant at site EPT-11 the chain is: contract fully executed, then site greenlight issued, then IRT access validated, then screening. Only the contract is still pending.",
+    "prompt": "Identify the single blocking dependency and the order of the remaining steps.",
+    "rubric": [
+      {
+        "name": "names the contract as the blocker",
+        "weight": 0.4,
+        "check": {
+          "type": "contains",
+          "value": "contract"
+        }
+      },
+      {
+        "name": "places greenlight next in the chain",
+        "weight": 0.3,
+        "check": {
+          "type": "contains",
+          "value": "greenlight"
+        }
+      },
+      {
+        "name": "includes IRT validation before screening",
+        "weight": 0.3,
+        "check": {
+          "type": "contains",
+          "value": "IRT"
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-003",
+    "dataset": "operational_reasoning",
+    "category": "risk_classification",
+    "difficulty": "easy",
+    "evaluation_method": "json_schema",
+    "context": "Severity matrix: critical = participant unblinding; major = missed visit; minor = query older than 30 days. Events this week: A) unblinding at EPT-02; B) missed visit at NLD-04; C) query aged 45 days.",
+    "prompt": "Classify each event. Return exactly the JSON object {\"A\": ..., \"B\": ..., \"C\": ...} with severity strings.",
+    "expected_output": {
+      "A": "critical",
+      "B": "major",
+      "C": "minor"
+    }
+  },
+  {
+    "id": "OPS-004",
+    "dataset": "operational_reasoning",
+    "category": "escalation",
+    "difficulty": "medium",
+    "evaluation_method": "rubric",
+    "context": "A serious adverse event was observed at 14:00 site time. SOP MRI-249 requires sponsor notification within 24 hours of awareness. The medical monitor is reachable on the emergency line. The next routine sponsor call is in 3 days.",
+    "prompt": "What must happen, by when, and through which channel?",
+    "rubric": [
+      {
+        "name": "states the 24-hour clock",
+        "weight": 0.4,
+        "check": {
+          "type": "contains",
+          "value": "24 hours"
+        }
+      },
+      {
+        "name": "routes via the medical monitor",
+        "weight": 0.3,
+        "check": {
+          "type": "contains",
+          "value": "medical monitor"
+        }
+      },
+      {
+        "name": "does not wait for the routine call",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)emergency|immediately|today|now"
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-005",
+    "dataset": "operational_reasoning",
+    "category": "sequencing",
+    "difficulty": "medium",
+    "evaluation_method": "rubric",
+    "context": "Database lock sequence per the DMP: 1) all queries closed, 2) source verification complete, 3) data review meeting minutes signed, 4) lock executed. Current status: queries still open, source verification complete, minutes not yet signed.",
+    "prompt": "List the remaining steps in the order they must occur.",
+    "rubric": [
+      {
+        "name": "orders queries, then minutes, then lock",
+        "weight": 0.5,
+        "check": {
+          "type": "regex",
+          "pattern": "(?is)queries[\\s\\S]*minutes[\\s\\S]*lock"
+        }
+      },
+      {
+        "name": "acknowledges source verification is already done",
+        "weight": 0.3,
+        "check": {
+          "type": "contains",
+          "value": "source verification"
+        }
+      },
+      {
+        "name": "gives a substantive answer",
+        "weight": 0.2,
+        "check": {
+          "type": "min_length",
+          "value": 40
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-006",
+    "dataset": "operational_reasoning",
+    "category": "ownership",
+    "difficulty": "easy",
+    "evaluation_method": "rubric",
+    "context": "Per the data management plan: the data manager closes queries; the CRA performs source verification; the sponsor statistician runs data transfers. Query Q-77 is open.",
+    "prompt": "Who closes query Q-77, and who verifies its source?",
+    "rubric": [
+      {
+        "name": "assigns closure to the data manager",
+        "weight": 0.5,
+        "check": {
+          "type": "contains",
+          "value": "data manager"
+        }
+      },
+      {
+        "name": "assigns verification to the CRA",
+        "weight": 0.3,
+        "check": {
+          "type": "contains",
+          "value": "CRA"
+        }
+      },
+      {
+        "name": "gives a substantive answer",
+        "weight": 0.2,
+        "check": {
+          "type": "min_length",
+          "value": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-007",
+    "dataset": "operational_reasoning",
+    "category": "change_management",
+    "difficulty": "medium",
+    "evaluation_method": "rubric",
+    "context": "Protocol amendment 4 adds a fasting requirement. Per SOP, an amendment requires governance board approval, a redlined consent when participant-facing, and site training before implementation. This change is participant-facing.",
+    "prompt": "List the steps that must complete before the amendment takes effect.",
+    "rubric": [
+      {
+        "name": "requires governance board approval",
+        "weight": 0.35,
+        "check": {
+          "type": "contains",
+          "value": "governance"
+        }
+      },
+      {
+        "name": "requires the consent update since it is participant-facing",
+        "weight": 0.35,
+        "check": {
+          "type": "contains",
+          "value": "consent"
+        }
+      },
+      {
+        "name": "requires site training before go-live",
+        "weight": 0.3,
+        "check": {
+          "type": "contains",
+          "value": "training"
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-008",
+    "dataset": "operational_reasoning",
+    "category": "prioritization",
+    "difficulty": "hard",
+    "evaluation_method": "rubric",
+    "context": "One CRA field day is available. Site A has a systematic consent error affecting 3 participants enrolled today. Site B has expired lab kits, none currently in use, with resupply already confirmed for Wednesday.",
+    "prompt": "Which site gets the visit, and how is the other handled? Justify briefly.",
+    "rubric": [
+      {
+        "name": "sends the CRA to site A",
+        "weight": 0.4,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)site a"
+        }
+      },
+      {
+        "name": "justifies via the active consent error",
+        "weight": 0.3,
+        "check": {
+          "type": "contains",
+          "value": "consent"
+        }
+      },
+      {
+        "name": "handles site B remotely or via the confirmed resupply",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)remote|resupply|phone|call"
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-009",
+    "dataset": "operational_reasoning",
+    "category": "dependency",
+    "difficulty": "easy",
+    "evaluation_method": "rubric",
+    "context": "Site greenlight requires the contract executed and IRT validation passed. The contract was signed yesterday; IRT validation awaits a sponsor configuration change. Nothing else is pending.",
+    "prompt": "Name the single remaining blocker and what it unblocks once cleared.",
+    "rubric": [
+      {
+        "name": "identifies IRT validation as the blocker",
+        "weight": 0.5,
+        "check": {
+          "type": "contains",
+          "value": "IRT"
+        }
+      },
+      {
+        "name": "links it to greenlight or enrollment",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)greenlight|enroll|screen"
+        }
+      },
+      {
+        "name": "gives a substantive answer",
+        "weight": 0.2,
+        "check": {
+          "type": "min_length",
+          "value": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-010",
+    "dataset": "operational_reasoning",
+    "category": "risk_classification",
+    "difficulty": "easy",
+    "evaluation_method": "json_schema",
+    "context": "Budget variance bands: high above 10 percent; medium 5 to 10 percent; low below 5 percent. Line items: imaging 12 percent over; monitoring 3 percent over; central labs 7 percent over.",
+    "prompt": "Classify each line item. Return exactly {\"imaging\": ..., \"monitoring\": ..., \"labs\": ...} with band strings.",
+    "expected_output": {
+      "imaging": "high",
+      "monitoring": "low",
+      "labs": "medium"
+    }
+  },
+  {
+    "id": "OPS-011",
+    "dataset": "operational_reasoning",
+    "category": "escalation",
+    "difficulty": "medium",
+    "evaluation_method": "rubric",
+    "context": "Escalate to the sponsor medical monitor when any of: enrollment 30 percent behind plan; a site inactive 6 weeks; two data breaches in one month. Status this month: enrollment 32 percent behind plan; one data breach.",
+    "prompt": "Should the PM escalate now? Answer yes or no and justify against the stated criteria.",
+    "rubric": [
+      {
+        "name": "answers yes",
+        "weight": 0.4,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)\\byes\\b"
+        }
+      },
+      {
+        "name": "cites the enrollment threshold or the 32 percent figure",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "3[02] percent|30 percent"
+        }
+      },
+      {
+        "name": "addresses the breach count against the two-breach rule",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)breach"
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-012",
+    "dataset": "operational_reasoning",
+    "category": "change_management",
+    "difficulty": "hard",
+    "evaluation_method": "rubric",
+    "context": "The statistical environment is locked to the study snapshot. A mandatory security patch for a pinned package arrives. Per SOP: patch in a branch environment, re-run the primary analysis, compare results to the snapshot, then promote with a new versioned snapshot.",
+    "prompt": "Order the steps required to apply the patch without invalidating the locked results.",
+    "rubric": [
+      {
+        "name": "patches in a branch, not the locked env",
+        "weight": 0.35,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)branch"
+        }
+      },
+      {
+        "name": "re-runs the primary analysis",
+        "weight": 0.35,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)re-?run"
+        }
+      },
+      {
+        "name": "promotes only with a new versioned snapshot",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)promot|snapshot"
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-013",
+    "dataset": "operational_reasoning",
+    "category": "prioritization",
+    "difficulty": "medium",
+    "evaluation_method": "rubric",
+    "context": "Data entry has 6 staff-hours today. The interim-lock feed needs 4 hours and is due tomorrow morning; the noncritical backlog needs 6 hours and has no near-term deadline.",
+    "prompt": "Allocate the day and say what happens to the rest.",
+    "rubric": [
+      {
+        "name": "funds the interim feed first",
+        "weight": 0.4,
+        "check": {
+          "type": "contains",
+          "value": "interim"
+        }
+      },
+      {
+        "name": "reserves the 4 hours the feed needs",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "4 hours?|4h"
+        }
+      },
+      {
+        "name": "defers or partially covers the backlog",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)backlog|defer|remain"
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-014",
+    "dataset": "operational_reasoning",
+    "category": "ownership",
+    "difficulty": "medium",
+    "evaluation_method": "rubric",
+    "context": "After database lock and 100 percent scan verification, the records coordinator ships archives; the study coordinator prepares the manifest; no other role handles transport. Both prerequisites are complete.",
+    "prompt": "Who ships the archives and who prepares the manifest?",
+    "rubric": [
+      {
+        "name": "assigns shipping to the records coordinator",
+        "weight": 0.5,
+        "check": {
+          "type": "contains",
+          "value": "records coordinator"
+        }
+      },
+      {
+        "name": "assignes the manifest to the study coordinator",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)study coordinator"
+        }
+      },
+      {
+        "name": "gives a substantive answer",
+        "weight": 0.2,
+        "check": {
+          "type": "min_length",
+          "value": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-015",
+    "dataset": "operational_reasoning",
+    "category": "dependency",
+    "difficulty": "medium",
+    "evaluation_method": "rubric",
+    "context": "The laboratory manual update publishes only after governance board approval and receipt of printer proofs. Approval is complete; the proofs are still pending. Sites may not use the new panel until the manual is published.",
+    "prompt": "What is the remaining blocker, and what stays gated behind it?",
+    "rubric": [
+      {
+        "name": "names the printer proofs as the blocker",
+        "weight": 0.5,
+        "check": {
+          "type": "contains",
+          "value": "proof"
+        }
+      },
+      {
+        "name": "notes the new panel stays ungated until publication",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)publish"
+        }
+      },
+      {
+        "name": "gives a substantive answer",
+        "weight": 0.2,
+        "check": {
+          "type": "min_length",
+          "value": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-016",
+    "dataset": "operational_reasoning",
+    "category": "risk_classification",
+    "difficulty": "easy",
+    "evaluation_method": "json_schema",
+    "context": "Timeline slippage bands: high above 4 weeks; medium 2 to 4 weeks; low below 2 weeks. Current slippage: imaging 6 weeks; central labs 3 weeks; monitoring 1 week.",
+    "prompt": "Classify each slippage. Return exactly {\"imaging\": ..., \"labs\": ..., \"monitoring\": ...} with band strings.",
+    "expected_output": {
+      "imaging": "high",
+      "labs": "medium",
+      "monitoring": "low"
+    }
+  },
+  {
+    "id": "OPS-017",
+    "dataset": "operational_reasoning",
+    "category": "escalation",
+    "difficulty": "easy",
+    "evaluation_method": "rubric",
+    "context": "Change requests costing more than 25,000 USD escalate to the sponsor; at or below that the study PM decides. The proposed courier change costs 31,000 USD.",
+    "prompt": "Who decides on the courier change, and why?",
+    "rubric": [
+      {
+        "name": "routes to the sponsor",
+        "weight": 0.6,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)sponsor"
+        }
+      },
+      {
+        "name": "cites the 31,000 figure against the threshold",
+        "weight": 0.4,
+        "check": {
+          "type": "regex",
+          "pattern": "31[,.]?000|31k"
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-018",
+    "dataset": "operational_reasoning",
+    "category": "sequencing",
+    "difficulty": "medium",
+    "evaluation_method": "rubric",
+    "context": "Archiving may start only after database lock and 100 percent scan verification. Lock is scheduled 2027-03-15; verification has historically taken about 3 weeks.",
+    "prompt": "When can archiving start at the earliest, and what two conditions gate it?",
+    "rubric": [
+      {
+        "name": "anchors on the 2027-03-15 lock",
+        "weight": 0.4,
+        "check": {
+          "type": "contains",
+          "value": "2027-03-15"
+        }
+      },
+      {
+        "name": "names scan verification as a gate",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)verification"
+        }
+      },
+      {
+        "name": "places the start after both gates, not before",
+        "weight": 0.3,
+        "check": {
+          "type": "min_length",
+          "value": 40
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-019",
+    "dataset": "operational_reasoning",
+    "category": "change_management",
+    "difficulty": "easy",
+    "evaluation_method": "rubric",
+    "context": "Staff may perform a study task only if listed on the delegation log before performing it. The new coordinator starts Monday and draws the first labs on Tuesday. The log update is requested today.",
+    "prompt": "What must happen, and by when, for Tuesday's lab draw to be compliant?",
+    "rubric": [
+      {
+        "name": "requires the delegation log update",
+        "weight": 0.5,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)delegation"
+        }
+      },
+      {
+        "name": "places it before the Tuesday draw",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)before|monday|today"
+        }
+      },
+      {
+        "name": "gives a substantive answer",
+        "weight": 0.2,
+        "check": {
+          "type": "min_length",
+          "value": 30
+        }
+      }
+    ]
+  },
+  {
+    "id": "OPS-020",
+    "dataset": "operational_reasoning",
+    "category": "prioritization",
+    "difficulty": "medium",
+    "evaluation_method": "json_schema",
+    "notes": "Ranking rule is total: urgency descending, ties broken by earliest due date. The order below is the unique winner.",
+    "context": "Tasks: replace damaged kit (urgency 5, due today); recalibrate phantom (urgency 5, due tomorrow); close query batch (urgency 3, due Friday); refresh sponsor deck (urgency 2, due Friday). Rank by urgency descending; break ties by earliest due date.",
+    "prompt": "Return exactly {\"order\": [<task names verbatim, best-first>]}.",
+    "expected_output": {
+      "order": [
+        "replace damaged kit",
+        "recalibrate phantom",
+        "close query batch",
+        "refresh sponsor deck"
+      ]
+    }
+  },
+  {
+    "id": "OPS-021",
+    "dataset": "operational_reasoning",
+    "category": "prioritization",
+    "difficulty": "hard",
+    "evaluation_method": "rubric",
+    "context": "Morning queue: the SAE notification window closes at noon and takes 30 minutes; the monitor arrives 13:00 for the visit; a query batch is due end of day.",
+    "prompt": "Plan the morning: what runs when, and what is the fallback if time slips?",
+    "rubric": [
+      {
+        "name": "schedules the SAE notification before noon",
+        "weight": 0.4,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)sae[\\s\\S]{0,80}(noon|12:00)|(noon|12:00)[\\s\\S]{0,80}sae"
+        }
+      },
+      {
+        "name": "prepares for the 13:00 monitoring visit",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)monitor|13:00"
+        }
+      },
+      {
+        "name": "keeps the query batch on track for end of day",
+        "weight": 0.3,
+        "check": {
+          "type": "regex",
+          "pattern": "(?i)quer"
+        }
+      }
+    ]
+  }
+]

@@ -91,7 +91,9 @@ class EnterpriseAssessment(BaseModel):
         assessed = sum(1 for i in self.items if i.status != "not_evaluated")
         positive = sum(1 for i in self.items if i.status in POSITIVE_STATUSES)
         unverified_positive = sum(
-            1 for i in self.items if i.status in POSITIVE_STATUSES and not (i.rationale or i.evidence)
+            1
+            for i in self.items
+            if i.status in POSITIVE_STATUSES and not (i.rationale or i.evidence)
         )
         return {
             "total": total,

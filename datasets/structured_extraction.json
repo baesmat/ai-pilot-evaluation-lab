@@ -1,0 +1,291 @@
+[
+  {
+    "id": "EXTRACT-001",
+    "dataset": "structured_extraction",
+    "category": "study_metadata",
+    "difficulty": "easy",
+    "evaluation_method": "json_schema",
+    "context": "Protocol MRI-241 Section 1: The Meridian Research Institute will conduct study MRI-241, a Phase 2b trial of compound MRX-114 in adults with elevated LDL-C.",
+    "prompt": "Using only the protocol excerpt, return a JSON object with the key phase set to the study phase, exactly as stated.",
+    "expected_output": {
+      "phase": "Phase 2b"
+    }
+  },
+  {
+    "id": "EXTRACT-002",
+    "dataset": "structured_extraction",
+    "category": "study_design",
+    "difficulty": "medium",
+    "evaluation_method": "json_schema",
+    "context": "Protocol MRI-233 Section 4.1: This is a Phase 3 trial. Participants are randomized 1:1 to MRX-201 or matching placebo. Blinding is maintained for the participants and the site investigators; the unblinded statistician prepares the analysis.",
+    "prompt": "Return a JSON object with keys phase (string) and blinded_roles, using the exact phrase from the excerpt for blinded_roles.",
+    "expected_output": {
+      "phase": "Phase 3",
+      "blinded_roles": "participants and site investigators"
+    }
+  },
+  {
+    "id": "EXTRACT-003",
+    "dataset": "structured_extraction",
+    "category": "enrollment",
+    "difficulty": "easy",
+    "evaluation_method": "numeric_match",
+    "tolerance": 0.0,
+    "context": "Protocol MRI-245 Section 6: It is planned to randomize approximately 312 participants across all sites.",
+    "prompt": "Return a JSON object {\"value\": <planned randomized participant count as a number>}.",
+    "expected_output": {
+      "value": 312
+    }
+  },
+  {
+    "id": "EXTRACT-004",
+    "dataset": "structured_extraction",
+    "category": "timeline",
+    "difficulty": "easy",
+    "evaluation_method": "json_schema",
+    "context": "Protocol MRI-241 Section 8: First participant in is expected on 2027-01-10. Primary completion, defined as last participant last visit, is expected on 2028-06-30.",
+    "prompt": "Return a JSON object with keys first_participant_in and primary_completion, as YYYY-MM-DD strings.",
+    "expected_output": {
+      "first_participant_in": "2027-01-10",
+      "primary_completion": "2028-06-30"
+    }
+  },
+  {
+    "id": "EXTRACT-005",
+    "dataset": "structured_extraction",
+    "category": "timeline",
+    "difficulty": "easy",
+    "evaluation_method": "numeric_match",
+    "tolerance": 0.0,
+    "context": "Protocol MRI-247 Section 7: The treatment period is 24 weeks, followed by a 4-week safety follow-up. There is no extension phase.",
+    "prompt": "Return a JSON object {\"value\": <total duration of treatment plus follow-up, in weeks, as a number>}.",
+    "expected_output": {
+      "value": 28
+    }
+  },
+  {
+    "id": "EXTRACT-006",
+    "dataset": "structured_extraction",
+    "category": "data_collection",
+    "difficulty": "medium",
+    "evaluation_method": "json_schema",
+    "context": "Protocol MRI-249 Section 6: Visit 1 occurs on Day 1 with a window of plus or minus 3 days. Visit 2 occurs at Week 12 with a window of plus or minus 5 days. Fasting labs are drawn at both visits.",
+    "prompt": "Return a JSON object with keys visit_1_day, visit_1_window_days, visit_2_week, visit_2_window_days, all numbers.",
+    "expected_output": {
+      "visit_1_day": 1,
+      "visit_1_window_days": 3,
+      "visit_2_week": 12,
+      "visit_2_window_days": 5
+    }
+  },
+  {
+    "id": "EXTRACT-007",
+    "dataset": "structured_extraction",
+    "category": "imaging",
+    "difficulty": "medium",
+    "evaluation_method": "json_schema",
+    "context": "Imaging charter MRI-241-IC1: At baseline, sites acquire T1-weighted, T2-FLAIR, and diffusion tensor images on a 3 Tesla scanner.",
+    "prompt": "Return a JSON object with key sequences (array of the sequence names, in the order listed) and key field_strength (the scanner field strength as stated, e.g. 3T).",
+    "expected_output": {
+      "sequences": [
+        "T1-weighted",
+        "T2-FLAIR",
+        "diffusion tensor"
+      ],
+      "field_strength": "3T"
+    }
+  },
+  {
+    "id": "EXTRACT-008",
+    "dataset": "structured_extraction",
+    "category": "imaging",
+    "difficulty": "easy",
+    "evaluation_method": "numeric_match",
+    "tolerance": 0.01,
+    "context": "Imaging charter MRI-241-IC1 Section 3: Sagittal T1 images are acquired at 1.0 mm slice thickness with no gap.",
+    "prompt": "Return a JSON object {\"value\": <slice thickness in mm as a number>}.",
+    "expected_output": {
+      "value": 1.0
+    }
+  },
+  {
+    "id": "EXTRACT-009",
+    "dataset": "structured_extraction",
+    "category": "multi_site",
+    "difficulty": "medium",
+    "evaluation_method": "json_schema",
+    "context": "Protocol MRI-251 Section 2: The trial runs at 9 sites in three regions: four sites in Northland, three in Eastport, and two in Westmere.",
+    "prompt": "Return a JSON object with key regions (array of region names in the order listed) and key site_count (number).",
+    "expected_output": {
+      "regions": [
+        "Northland",
+        "Eastport",
+        "Westmere"
+      ],
+      "site_count": 9
+    }
+  },
+  {
+    "id": "EXTRACT-010",
+    "dataset": "structured_extraction",
+    "category": "multi_site",
+    "difficulty": "easy",
+    "evaluation_method": "numeric_match",
+    "tolerance": 0.0,
+    "context": "Protocol MRI-250 amendment 1, site list: 14 active sites are enumerated.",
+    "prompt": "Return a JSON object {\"value\": <number of active sites>}.",
+    "expected_output": {
+      "value": 14
+    }
+  },
+  {
+    "id": "EXTRACT-011",
+    "dataset": "structured_extraction",
+    "category": "computing",
+    "difficulty": "medium",
+    "evaluation_method": "json_schema",
+    "context": "Statistical analysis environment memo MRI-253-SE1: Analyses run under Python 3.11 with statsmodels pinned at 0.14.1. The environment is locked and versioned with the study snapshot.",
+    "prompt": "Return a JSON object with keys python, statsmodels (version strings exactly as pinned) and environment (the term describing the lock state).",
+    "expected_output": {
+      "python": "3.11",
+      "statsmodels": "0.14.1",
+      "environment": "locked"
+    }
+  },
+  {
+    "id": "EXTRACT-012",
+    "dataset": "structured_extraction",
+    "category": "computing",
+    "difficulty": "easy",
+    "evaluation_method": "json_schema",
+    "context": "IT provision sheet MRI-253-IT2: The imaging QC workstation requires at least 8 CPU cores and 32 GB RAM. A GPU is optional.",
+    "prompt": "Return a JSON object with keys min_cpu_cores and min_ram_gb (numbers) and gpu (the availability word used in the sheet).",
+    "expected_output": {
+      "min_cpu_cores": 8,
+      "min_ram_gb": 32,
+      "gpu": "optional"
+    }
+  },
+  {
+    "id": "EXTRACT-013",
+    "dataset": "structured_extraction",
+    "category": "missing_fields",
+    "difficulty": "medium",
+    "evaluation_method": "json_schema",
+    "notes": "Tests absent-field handling: the correct value is null because the source is silent.",
+    "context": "Protocol MRI-252 Section 5 names the primary endpoint and the key secondary endpoint. The document does not name a medical monitor anywhere.",
+    "prompt": "Return a JSON object {\"medical_monitor\": <the name, or null if the excerpt does not state one>}.",
+    "expected_output": {
+      "medical_monitor": null
+    }
+  },
+  {
+    "id": "EXTRACT-014",
+    "dataset": "structured_extraction",
+    "category": "missing_fields",
+    "difficulty": "medium",
+    "evaluation_method": "json_schema",
+    "notes": "Tests absent-field handling with a boolean-typed slot; the source omits urinalysis, so null is correct.",
+    "context": "Lab manual MRI-252-LM1 covers the hematology and chemistry panels. Urinalysis is not mentioned in the manual.",
+    "prompt": "Return a JSON object {\"urinalysis_required\": <true, false, or null if the manual does not say>}.",
+    "expected_output": {
+      "urinalysis_required": null
+    }
+  },
+  {
+    "id": "EXTRACT-015",
+    "dataset": "structured_extraction",
+    "category": "conflicting_statements",
+    "difficulty": "hard",
+    "evaluation_method": "json_schema",
+    "notes": "Two sources state different enrollments; the amendment is governing and must win.",
+    "context": "Protocol MRI-241 v1.0 states that 312 participants will be randomized. Amendment 2, the version currently in effect, raises the target to 480. An older slide deck still shows 312.",
+    "prompt": "Using the governing document only, return a JSON object {\"target_enrollment\": <number>}.",
+    "expected_output": {
+      "target_enrollment": 480
+    }
+  },
+  {
+    "id": "EXTRACT-016",
+    "dataset": "structured_extraction",
+    "category": "conflicting_statements",
+    "difficulty": "hard",
+    "evaluation_method": "json_schema",
+    "notes": "The monitoring plan is stale; the in-effect amendment governs the window.",
+    "context": "The original protocol lists the Week 24 visit window as 14 days. Amendment 3, now in effect, narrows the window to 10 days. The monitoring plan still references 14 days.",
+    "prompt": "Using the document in effect, return a JSON object {\"week_24_window_days\": <number>}.",
+    "expected_output": {
+      "week_24_window_days": 10
+    }
+  },
+  {
+    "id": "EXTRACT-017",
+    "dataset": "structured_extraction",
+    "category": "strict_json",
+    "difficulty": "medium",
+    "evaluation_method": "json_exact",
+    "system_prompt": "Respond with only a JSON object. No prose, no code fences.",
+    "context": "Registration sheet: the study identifier is MRI-241. The trial compares two arms, MRX-114 and placebo.",
+    "prompt": "Return exactly the JSON object with keys study_id (string) and arm_count (number), populated from the sheet.",
+    "expected_output": {
+      "study_id": "MRI-241",
+      "arm_count": 2
+    }
+  },
+  {
+    "id": "EXTRACT-018",
+    "dataset": "structured_extraction",
+    "category": "strict_json",
+    "difficulty": "medium",
+    "evaluation_method": "json_exact",
+    "system_prompt": "Respond with only a JSON object. No prose, no code fences.",
+    "context": "Records memo: archive boxes MRI-CRD-01 and MRI-CRD-01-B ship to the Meridian records center on Thursday.",
+    "prompt": "Return exactly the JSON object {\"boxes\": [<labels in the order listed>]}.",
+    "expected_output": {
+      "boxes": [
+        "MRI-CRD-01",
+        "MRI-CRD-01-B"
+      ]
+    }
+  },
+  {
+    "id": "EXTRACT-019",
+    "dataset": "structured_extraction",
+    "category": "eligibility",
+    "difficulty": "easy",
+    "evaluation_method": "json_schema",
+    "context": "Protocol MRI-247 Section 5, inclusion criteria: age 18 to 75 years inclusive; written imaging consent is required.",
+    "prompt": "Return a JSON object with keys age_min_years, age_max_years (numbers) and imaging_consent_required (boolean).",
+    "expected_output": {
+      "age_min_years": 18,
+      "age_max_years": 75,
+      "imaging_consent_required": true
+    }
+  },
+  {
+    "id": "EXTRACT-020",
+    "dataset": "structured_extraction",
+    "category": "statistical_assumptions",
+    "difficulty": "medium",
+    "evaluation_method": "numeric_match",
+    "tolerance": 0.01,
+    "context": "Statistical assumptions memo MRI-247-SA1: The sample size accounts for 12.5 percent attrition over the treatment period.",
+    "prompt": "Return a JSON object {\"value\": <the attrition percentage as a number>}.",
+    "expected_output": {
+      "value": 12.5
+    }
+  },
+  {
+    "id": "EXTRACT-021",
+    "dataset": "structured_extraction",
+    "category": "safety_reporting",
+    "difficulty": "medium",
+    "evaluation_method": "json_schema",
+    "context": "Protocol MRI-249 Section 9: Adverse events are collected through the 24-week treatment period plus 30 days after the last dose. Serious adverse events are reported within 24 hours of site awareness.",
+    "prompt": "Return a JSON object with keys ae_collection_days_after_last_dose and sae_report_hours (numbers).",
+    "expected_output": {
+      "ae_collection_days_after_last_dose": 30,
+      "sae_report_hours": 24
+    }
+  }
+]

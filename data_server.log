@@ -1,0 +1,142 @@
+INFO:     Started server process [11996]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8310 (Press CTRL+C to quit)
+INFO:     127.0.0.1:37654 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:37668 - "GET /api/app-info HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53762 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53768 - "GET /api/app-info HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53770 - "POST /api/models HTTP/1.1" 201 Created
+INFO:     127.0.0.1:53774 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:53784 - "POST /api/models/glm53-flash-gb10/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57958 - "GET /api/datasets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57960 - "POST /api/evaluations HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:40242 - "GET /api/evaluations/135f658be6c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57550 - "GET /api/evaluations/135f658be6c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51256 - "GET /api/evaluations/135f658be6c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45786 - "GET /api/evaluations/135f658be6c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:57756 - "GET /api/evaluations/135f658be6c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47930 - "GET /api/evaluations/135f658be6c4/results HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [11996]
+INFO:     Started server process [12557]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8310 (Press CTRL+C to quit)
+INFO:     127.0.0.1:39960 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39968 - "POST /api/evaluations HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:47702 - "GET /api/evaluations/69a1003e1db2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45554 - "GET /api/evaluations/69a1003e1db2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60590 - "GET /api/evaluations/69a1003e1db2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:58050 - "GET /api/evaluations/69a1003e1db2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44368 - "GET /api/evaluations/69a1003e1db2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48054 - "GET /api/evaluations/69a1003e1db2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:60726 - "GET /api/evaluations/69a1003e1db2 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59274 - "GET /api/evaluations/69a1003e1db2/results HTTP/1.1" 200 OK
+INFO:     127.0.0.1:35284 - "GET /api/evaluations/69a1003e1db2/results HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43868 - "GET /api/evaluations/69a1003e1db2/results HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49132 - "GET /api/evaluations/69a1003e1db2/results HTTP/1.1" 200 OK
+INFO:     127.0.0.1:46222 - "GET /api/evaluations/69a1003e1db2/results HTTP/1.1" 200 OK
+INFO:     127.0.0.1:44254 - "GET /api/evaluations/69a1003e1db2/results HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [12557]
+INFO:     Started server process [12746]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8310 (Press CTRL+C to quit)
+INFO:     127.0.0.1:50662 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50664 - "POST /api/evaluations HTTP/1.1" 202 Accepted
+INFO:     127.0.0.1:40436 - "GET /api/evaluations/ba52522e5f4e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:43090 - "GET /api/evaluations/ba52522e5f4e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42902 - "GET /api/evaluations/ba52522e5f4e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59320 - "GET /api/evaluations/ba52522e5f4e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34868 - "GET /api/evaluations/ba52522e5f4e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45834 - "GET /api/evaluations/ba52522e5f4e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47466 - "GET /api/evaluations/ba52522e5f4e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:49230 - "GET /api/evaluations/ba52522e5f4e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:59104 - "GET /api/evaluations/ba52522e5f4e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39608 - "GET /api/models/glm53-flash-gb10 HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:39614 - "PUT /api/models/glm53-flash-gb10 HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:39626 - "GET /api/evaluations/ba52522e5f4e/results HTTP/1.1" 200 OK
+INFO:     127.0.0.1:39628 - "GET /api/evaluations/ba52522e5f4e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:55618 - "GET /api/models/glm53-flash-gb10 HTTP/1.1" 405 Method Not Allowed
+INFO:     127.0.0.1:55630 - "PUT /api/models/glm53-flash-gb10 HTTP/1.1" 422 Unprocessable Content
+INFO:     127.0.0.1:55642 - "GET /openapi.json HTTP/1.1" 200 OK
+INFO:     127.0.0.1:51986 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52002 - "PUT /api/models/glm53-flash-gb10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52008 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52010 - "GET /api/evaluations/ba52522e5f4e/report?format=pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52026 - "GET /api/evaluations/ba52522e5f4e/report?format=markdown HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [12746]
+INFO:     Started server process [13514]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8310 (Press CTRL+C to quit)
+INFO:     127.0.0.1:38000 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38010 - "GET /api/evaluations/ba52522e5f4e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38026 - "GET /api/evaluations/ba52522e5f4e/results HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38030 - "PUT /api/assessments/glm53-flash-gb10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38034 - "GET /api/assessments/glm53-flash-gb10/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38040 - "POST /api/reviews HTTP/1.1" 201 Created
+INFO:     127.0.0.1:38042 - "GET /api/evaluations/ba52522e5f4e/report?format=pdf HTTP/1.1" 200 OK
+INFO:     127.0.0.1:38056 - "GET /api/evaluations/ba52522e5f4e/report?format=markdown HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42028 - "GET /api/comparison?run_ids=ba52522e5f4e%2C69a1003e1db2 HTTP/1.1" 200 OK
+INFO:     Shutting down
+INFO:     Waiting for application shutdown.
+INFO:     Application shutdown complete.
+INFO:     Finished server process [13514]
+INFO:     Started server process [13608]
+INFO:     Waiting for application startup.
+INFO:     Application startup complete.
+INFO:     Uvicorn running on http://127.0.0.1:8310 (Press CTRL+C to quit)
+INFO:     127.0.0.1:52704 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42086 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42092 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42104 - "GET /api/evaluations?limit=100 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42110 - "GET /api/datasets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42114 - "GET /api/comparison?run_ids=ba52522e5f4e%2C69a1003e1db2%2C135f658be6c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50058 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50074 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50082 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50086 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50092 - "GET /api/datasets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:50100 - "GET /api/evaluations?model_id=glm53-flash-gb10&limit=10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34588 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34592 - "GET /api/evaluations?limit=100 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34602 - "GET /api/evaluations/ba52522e5f4e?include_results=true HTTP/1.1" 200 OK
+INFO:     127.0.0.1:34608 - "GET /api/evaluations/ba52522e5f4e/results HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40694 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40706 - "GET /api/evaluations?limit=100 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40716 - "GET /api/comparison?run_ids=ba52522e5f4e%2C69a1003e1db2%2C135f658be6c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40718 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40726 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40736 - "GET /api/assessments/glm53-flash-gb10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40738 - "GET /api/assessments/glm53-flash-gb10/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:40742 - "GET /api/reviews/glm53-flash-gb10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42942 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:42948 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45696 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45700 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45712 - "GET /api/datasets HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45722 - "GET /api/evaluations?model_id=glm53-flash-gb10&limit=10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45738 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45752 - "GET /api/evaluations?limit=100 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45762 - "GET /api/evaluations/ba52522e5f4e?include_results=true HTTP/1.1" 200 OK
+INFO:     127.0.0.1:45768 - "GET /api/evaluations/ba52522e5f4e/results HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47130 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47134 - "GET /api/evaluations?limit=100 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:47142 - "GET /api/comparison?run_ids=ba52522e5f4e%2C69a1003e1db2%2C135f658be6c4 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52796 - "GET /api/health HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52802 - "GET /api/models HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52814 - "GET /api/assessments/glm53-flash-gb10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52826 - "GET /api/assessments/glm53-flash-gb10/summary HTTP/1.1" 200 OK
+INFO:     127.0.0.1:52840 - "GET /api/reviews/glm53-flash-gb10 HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48850 - "GET /api/evaluations/ba52522e5f4e HTTP/1.1" 200 OK
+INFO:     127.0.0.1:48866 - "GET /api/evaluations/ba52522e5f4e/results HTTP/1.1" 200 OK

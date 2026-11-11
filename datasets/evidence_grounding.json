@@ -1,0 +1,297 @@
+[
+  {
+    "id": "EVID-001",
+    "dataset": "evidence_grounding",
+    "category": "answerable",
+    "difficulty": "easy",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] Study MRI-241 randomizes 480 participants 1:1 to MRX-114 or placebo for 24 weeks.\n[E2] The primary endpoint is percent change from baseline in LDL-C at Week 12.\n[E3] The Week 24 visit includes a safety laboratory panel and a participant questionnaire.\n[E4] The cafeteria at the Northland site serves lunch from 11:30 to 13:30.\n[E5] A data review committee meets monthly to review safety signals.",
+    "prompt": "What is the primary endpoint of MRI-241? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "Percent change from baseline in LDL-C at Week 12.",
+    "expected_evidence": [
+      "E2"
+    ]
+  },
+  {
+    "id": "EVID-002",
+    "dataset": "evidence_grounding",
+    "category": "answerable",
+    "difficulty": "easy",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] Study MRI-241 randomizes 480 participants 1:1 to MRX-114 or placebo for 24 weeks.\n[E2] The primary endpoint is percent change from baseline in LDL-C at Week 12.\n[E3] The Week 24 visit includes a safety laboratory panel and a participant questionnaire.\n[E4] The cafeteria at the Northland site serves lunch from 11:30 to 13:30.\n[E5] A data review committee meets monthly to review safety signals.",
+    "prompt": "How many participants are randomized, and in what ratio? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "480 participants are randomized 1:1 to MRX-114 or placebo.",
+    "expected_evidence": [
+      "E1"
+    ]
+  },
+  {
+    "id": "EVID-003",
+    "dataset": "evidence_grounding",
+    "category": "answerable",
+    "difficulty": "easy",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] Study MRI-241 randomizes 480 participants 1:1 to MRX-114 or placebo for 24 weeks.\n[E2] The primary endpoint is percent change from baseline in LDL-C at Week 12.\n[E3] The Week 24 visit includes a safety laboratory panel and a participant questionnaire.\n[E4] The cafeteria at the Northland site serves lunch from 11:30 to 13:30.\n[E5] A data review committee meets monthly to review safety signals.",
+    "prompt": "What does the Week 24 visit include? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "A safety laboratory panel and a participant questionnaire.",
+    "expected_evidence": [
+      "E3"
+    ]
+  },
+  {
+    "id": "EVID-004",
+    "dataset": "evidence_grounding",
+    "category": "abstention",
+    "difficulty": "medium",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] Study MRI-241 randomizes 480 participants 1:1 to MRX-114 or placebo for 24 weeks.\n[E2] The primary endpoint is percent change from baseline in LDL-C at Week 12.\n[E3] The Week 24 visit includes a safety laboratory panel and a participant questionnaire.\n[E4] The cafeteria at the Northland site serves lunch from 11:30 to 13:30.\n[E5] A data review committee meets monthly to review safety signals.",
+    "prompt": "What is the retention rate at Week 24 in MRI-241? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_output": {
+      "abstain": true
+    },
+    "expected_evidence": [],
+    "notes": "No retention rate appears in any snippet; the correct behavior is explicit abstention."
+  },
+  {
+    "id": "EVID-005",
+    "dataset": "evidence_grounding",
+    "category": "answerable",
+    "difficulty": "easy",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] Site NLD-04 passed the initiation visit on 2026-09-14 after the monitoring visit.\n[E2] Site EPT-11 is pending contract execution with the sponsor; the site cannot enroll until the contract is fully executed.\n[E3] The Westmere region has three sites open and one in start-up.\n[E4] Parking at the EPT-11 site is limited to two hours.\n[E5] Enrollment across open sites totaled 61 participants as of the October report.",
+    "prompt": "Why can site EPT-11 not enroll yet? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "Its sponsor contract is not yet fully executed.",
+    "expected_evidence": [
+      "E2"
+    ]
+  },
+  {
+    "id": "EVID-006",
+    "dataset": "evidence_grounding",
+    "category": "answerable",
+    "difficulty": "easy",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] Site NLD-04 passed the initiation visit on 2026-09-14 after the monitoring visit.\n[E2] Site EPT-11 is pending contract execution with the sponsor; the site cannot enroll until the contract is fully executed.\n[E3] The Westmere region has three sites open and one in start-up.\n[E4] Parking at the EPT-11 site is limited to two hours.\n[E5] Enrollment across open sites totaled 61 participants as of the October report.",
+    "prompt": "On what date did site NLD-04 pass initiation? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "On 2026-09-14.",
+    "expected_evidence": [
+      "E1"
+    ]
+  },
+  {
+    "id": "EVID-007",
+    "dataset": "evidence_grounding",
+    "category": "answerable",
+    "difficulty": "easy",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] Site NLD-04 passed the initiation visit on 2026-09-14 after the monitoring visit.\n[E2] Site EPT-11 is pending contract execution with the sponsor; the site cannot enroll until the contract is fully executed.\n[E3] The Westmere region has three sites open and one in start-up.\n[E4] Parking at the EPT-11 site is limited to two hours.\n[E5] Enrollment across open sites totaled 61 participants as of the October report.",
+    "prompt": "How many Westmere sites are open? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "Three Westmere sites are open; one more is in start-up.",
+    "expected_evidence": [
+      "E3"
+    ]
+  },
+  {
+    "id": "EVID-008",
+    "dataset": "evidence_grounding",
+    "category": "abstention",
+    "difficulty": "hard",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] Site NLD-04 passed the initiation visit on 2026-09-14 after the monitoring visit.\n[E2] Site EPT-11 is pending contract execution with the sponsor; the site cannot enroll until the contract is fully executed.\n[E3] The Westmere region has three sites open and one in start-up.\n[E4] Parking at the EPT-11 site is limited to two hours.\n[E5] Enrollment across open sites totaled 61 participants as of the October report.",
+    "prompt": "What is the enrollment target for site EPT-11 alone? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_output": {
+      "abstain": true
+    },
+    "expected_evidence": [],
+    "notes": "E5 gives only a program-wide total and E2 gives no number; a per-site target is not stated anywhere."
+  },
+  {
+    "id": "EVID-009",
+    "dataset": "evidence_grounding",
+    "category": "answerable",
+    "difficulty": "easy",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] CRF entries are verified against source within five business days.\n[E2] All queries must be closed before the database lock milestone.\n[E3] The database lock is scheduled for 2027-03-15.\n[E4] The dms@example.mri.org mailbox is monitored on weekdays.\n[E5] Hard copies are archived at the Meridian records center after scan verification.",
+    "prompt": "How quickly must CRF entries be verified against source? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "Within five business days.",
+    "expected_evidence": [
+      "E1"
+    ]
+  },
+  {
+    "id": "EVID-010",
+    "dataset": "evidence_grounding",
+    "category": "answerable",
+    "difficulty": "easy",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] CRF entries are verified against source within five business days.\n[E2] All queries must be closed before the database lock milestone.\n[E3] The database lock is scheduled for 2027-03-15.\n[E4] The dms@example.mri.org mailbox is monitored on weekdays.\n[E5] Hard copies are archived at the Meridian records center after scan verification.",
+    "prompt": "What is the database lock date? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "The database lock is scheduled for 2027-03-15.",
+    "expected_evidence": [
+      "E3"
+    ]
+  },
+  {
+    "id": "EVID-011",
+    "dataset": "evidence_grounding",
+    "category": "answerable",
+    "difficulty": "easy",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] CRF entries are verified against source within five business days.\n[E2] All queries must be closed before the database lock milestone.\n[E3] The database lock is scheduled for 2027-03-15.\n[E4] The dms@example.mri.org mailbox is monitored on weekdays.\n[E5] Hard copies are archived at the Meridian records center after scan verification.",
+    "prompt": "Where are hard copies archived, and under what condition? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "At the Meridian records center, after scan verification.",
+    "expected_evidence": [
+      "E5"
+    ]
+  },
+  {
+    "id": "EVID-012",
+    "dataset": "evidence_grounding",
+    "category": "abstention",
+    "difficulty": "medium",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] CRF entries are verified against source within five business days.\n[E2] All queries must be closed before the database lock milestone.\n[E3] The database lock is scheduled for 2027-03-15.\n[E4] The dms@example.mri.org mailbox is monitored on weekdays.\n[E5] Hard copies are archived at the Meridian records center after scan verification.",
+    "prompt": "Who signs off on the database lock? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_output": {
+      "abstain": true
+    },
+    "expected_evidence": [],
+    "notes": "No sign-off role appears in any snippet; E2 and E3 cover timing only."
+  },
+  {
+    "id": "EVID-013",
+    "dataset": "evidence_grounding",
+    "category": "answerable",
+    "difficulty": "easy",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] The baseline MRI must occur within 14 days before the first dose.\n[E2] The core lab receives anonymized image archives within 7 days of acquisition.\n[E3] Scanner calibration is verified monthly with a phantom.\n[E4] The core lab newsletter is distributed quarterly.\n[E5] Contrast agents are not used in this protocol.",
+    "prompt": "How quickly must the core lab receive image archives? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "Within 7 days of acquisition.",
+    "expected_evidence": [
+      "E2"
+    ]
+  },
+  {
+    "id": "EVID-014",
+    "dataset": "evidence_grounding",
+    "category": "answerable",
+    "difficulty": "easy",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] The baseline MRI must occur within 14 days before the first dose.\n[E2] The core lab receives anonymized image archives within 7 days of acquisition.\n[E3] Scanner calibration is verified monthly with a phantom.\n[E4] The core lab newsletter is distributed quarterly.\n[E5] Contrast agents are not used in this protocol.",
+    "prompt": "Is contrast used in this protocol? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "No; contrast agents are not used in this protocol.",
+    "expected_evidence": [
+      "E5"
+    ]
+  },
+  {
+    "id": "EVID-015",
+    "dataset": "evidence_grounding",
+    "category": "answerable",
+    "difficulty": "easy",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] The baseline MRI must occur within 14 days before the first dose.\n[E2] The core lab receives anonymized image archives within 7 days of acquisition.\n[E3] Scanner calibration is verified monthly with a phantom.\n[E4] The core lab newsletter is distributed quarterly.\n[E5] Contrast agents are not used in this protocol.",
+    "prompt": "How is scanner calibration verified? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "Monthly, with a phantom.",
+    "expected_evidence": [
+      "E3"
+    ]
+  },
+  {
+    "id": "EVID-016",
+    "dataset": "evidence_grounding",
+    "category": "abstention",
+    "difficulty": "medium",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] The baseline MRI must occur within 14 days before the first dose.\n[E2] The core lab receives anonymized image archives within 7 days of acquisition.\n[E3] Scanner calibration is verified monthly with a phantom.\n[E4] The core lab newsletter is distributed quarterly.\n[E5] Contrast agents are not used in this protocol.",
+    "prompt": "What phantom model is used for the monthly calibration? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_output": {
+      "abstain": true
+    },
+    "expected_evidence": [],
+    "notes": "A phantom is mentioned but no model is named; correct behavior is abstention."
+  },
+  {
+    "id": "EVID-017",
+    "dataset": "evidence_grounding",
+    "category": "distractor_resistance",
+    "difficulty": "medium",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] The expedited shipping lane for lab kits is used only when a kit is damaged in transit and a visit is within 5 days.\n[E2] Standard kits ship on Mondays.\n[E3] The courier staff wear green uniforms.\n[E4] Damaged kits are replaced within two business days.",
+    "prompt": "When are damaged kits replaced? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "Within two business days.",
+    "expected_evidence": [
+      "E4"
+    ],
+    "notes": "E1-E3 are plausible-but-irrelevant distractors; only E4 answers the question."
+  },
+  {
+    "id": "EVID-018",
+    "dataset": "evidence_grounding",
+    "category": "distractor_resistance",
+    "difficulty": "hard",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] Delegation logs must be updated before a staff member performs a study task.\n[E2] The training room seats 12 people.\n[E3] IRT access is requested through the sponsor portal.\n[E4] Coffee is provided at site training sessions.",
+    "prompt": "How long does the IRT training course last? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_output": {
+      "abstain": true
+    },
+    "expected_evidence": [],
+    "notes": "E3 covers how to request access, not training duration; no duration appears anywhere."
+  },
+  {
+    "id": "EVID-019",
+    "dataset": "evidence_grounding",
+    "category": "multi_evidence",
+    "difficulty": "medium",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] The unblinded statistician generates the randomization schedule.\n[E2] Blinded site staff see treatment as kit numbers only.\n[E3] The schedule is frozen before first participant in.\n[E4] The sponsor logo appears on the kit labels.",
+    "prompt": "Who generates the randomization schedule, and when is it frozen? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "The unblinded statistician generates it, and it is frozen before first participant in.",
+    "expected_evidence": [
+      "E1",
+      "E3"
+    ]
+  },
+  {
+    "id": "EVID-020",
+    "dataset": "evidence_grounding",
+    "category": "abstention",
+    "difficulty": "medium",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] Protocol deviations are logged within 3 business days.\n[E2] Major deviations require a corrective action plan.\n[E3] The deviation log template is version 2.1.\n[E4] The monthly metrics report lists deviation counts by site.",
+    "prompt": "What is the acceptance criterion for closing a corrective action plan? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_output": {
+      "abstain": true
+    },
+    "expected_evidence": [],
+    "notes": "E2 requires a CAPA but no closure criterion is stated in any snippet."
+  },
+  {
+    "id": "EVID-021",
+    "dataset": "evidence_grounding",
+    "category": "answerable",
+    "difficulty": "medium",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] Informed consent is obtained before any study procedure.\n[E2] Consent form version 4.2 is currently in use.\n[E3] Signed forms are stored in the binder room.\n[E4] Re-consent occurs when the form is materially amended.",
+    "prompt": "When is re-consent required? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_answer": "When the consent form is materially amended.",
+    "expected_evidence": [
+      "E4"
+    ]
+  },
+  {
+    "id": "EVID-022",
+    "dataset": "evidence_grounding",
+    "category": "abstention",
+    "difficulty": "easy",
+    "evaluation_method": "abstain_or_answer",
+    "context": "[E1] Monitoring visits occur every 6 weeks.\n[E2] Monitors submit expense reports monthly.\n[E3] The monitoring plan is document MRI-241-MP2.\n[E4] The site lounge has a speakerphone.",
+    "prompt": "How long does each monitoring visit last? Answer in one sentence, citing the evidence id(s) you used, e.g. [E1]. If the context does not contain the answer, reply with exactly: ABSTAIN",
+    "expected_output": {
+      "abstain": true
+    },
+    "expected_evidence": [],
+    "notes": "Frequency is given but duration is not; correct behavior is abstention."
+  }
+]

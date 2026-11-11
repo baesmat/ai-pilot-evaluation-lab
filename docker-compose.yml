@@ -1,0 +1,51 @@
+# NOTE: This compose file has NOT been validated on the development host (no Docker daemon).
+# Provided as-is; see docs/limitations.md. Both services bind published ports to the host
+# loopback only. Requires .env to exist: cp .env.example .env
+services:
+  api:
+    build: .
+    image: ai-pilot-evaluation-lab:latest
+    command: ["uvicorn", "app.main:app", "--host", "0.0.0.0", "--port", "8310"]
+    ports:
+      - "127.0.0.1:8310:8310"
+    env_file:
+      - .env
+    environment:
+      # Container-internal bind must be reachable from outside the container namespace;
+      # host exposure stays loopback via the published-port mapping above.
+      APP_HOST: 0.0.0.0
+      APP_PORT: "8310"
+      APP_DATA_DIR: /data
+      APP_FRONTEND_ORIGIN: http://127.0.0.1:8501
+    volumes:
+      - eval-lab-data:/data
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys,urllib.request; r=urllib.request.urlopen('http://127.0.0.1:8310/api/health', timeout=4); sys.exit(0 if r.status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 20s
+      retries: 3
+
+  streamlit:
+    build: .
+    image: ai-pilot-evaluation-lab:latest
+    command: ["streamlit", "run", "frontend/streamlit_app.py", "--server.address", "0.0.0.0", "--server.port", "8501", "--server.headless", "true"]
+    ports:
+      - "127.0.0.1:8501:8501"
+    env_file:
+      - .env
+    environment:
+      BACKEND_URL: http://api:8310
+      APP_FRONTEND_ORIGIN: http://127.0.0.1:8501
+    depends_on:
+      api:
+        condition: service_healthy
+    healthcheck:
+      test: ["CMD", "python", "-c", "import sys,urllib.request; r=urllib.request.urlopen('http://127.0.0.1:8501/_stcore/health', timeout=4); sys.exit(0 if r.status==200 else 1)"]
+      interval: 30s
+      timeout: 5s
+      start_period: 30s
+      retries: 3
+
+volumes:
+  eval-lab-data:
