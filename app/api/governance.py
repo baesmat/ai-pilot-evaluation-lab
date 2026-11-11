@@ -106,9 +106,7 @@ def assessment_summary(model_id: str) -> dict:
 
 @router.post("/reviews", status_code=status.HTTP_201_CREATED)
 def create_review(review: ReviewCreate) -> dict:
-    parsed_date = (
-        date.fromisoformat(review.review_date) if review.review_date else date.today()
-    )
+    parsed_date = date.fromisoformat(review.review_date) if review.review_date else date.today()
     record = HumanReview(
         model_id=review.model_id,
         reviewer=review.reviewer,

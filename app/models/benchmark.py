@@ -8,14 +8,14 @@ from pydantic import BaseModel, Field
 
 # Deterministic scoring methods. Every case must declare one.
 EvaluationMethod = Literal[
-    "exact_match",          # whole-output equality (normalized)
-    "json_exact",           # parsed JSON equality
-    "json_schema",          # keys/types present with values matched field-level
-    "numeric_match",        # numeric comparison with tolerance
-    "set_match",            # set equality of items
-    "contains_all",         # all expected substrings present
-    "rubric",               # weighted criteria, deterministic checks where possible
-    "abstain_or_answer",    # grounding: answer with citations, or explicit abstain
+    "exact_match",  # whole-output equality (normalized)
+    "json_exact",  # parsed JSON equality
+    "json_schema",  # keys/types present with values matched field-level
+    "numeric_match",  # numeric comparison with tolerance
+    "set_match",  # set equality of items
+    "contains_all",  # all expected substrings present
+    "rubric",  # weighted criteria, deterministic checks where possible
+    "abstain_or_answer",  # grounding: answer with citations, or explicit abstain
 ]
 
 Difficulty = Literal["easy", "medium", "hard"]

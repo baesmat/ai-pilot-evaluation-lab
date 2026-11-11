@@ -58,9 +58,7 @@ def start_evaluation(request: StartRunRequest) -> dict:
             status_code=status.HTTP_400_BAD_REQUEST, detail=safe_error(exc)
         ) from exc
     except KeyError as exc:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail=safe_error(exc)
-        ) from exc
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=safe_error(exc)) from exc
     return {"run_id": run_id, "status": "queued"}
 
 

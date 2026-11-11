@@ -200,11 +200,17 @@ def _sections_payload(
         }
     )
     sections["Evaluation Methodology"] = [
-        ("Scoring", "Deterministic methods with field-level partial credit; "
-         "incomplete answers never receive full credit."),
+        (
+            "Scoring",
+            "Deterministic methods with field-level partial credit; "
+            "incomplete answers never receive full credit.",
+        ),
         ("Methods used", ", ".join(methods) if methods else "Not available"),
-        ("Human judgement", "Subjective criteria require human review; any "
-         "AI-assisted judgements are labelled as such, never ground truth."),
+        (
+            "Human judgement",
+            "Subjective criteria require human review; any "
+            "AI-assisted judgements are labelled as such, never ground truth.",
+        ),
     ]
     sections["Recommendation"] = [
         (RECOMMENDATIONS.get(outcome, outcome), rationale),
@@ -307,17 +313,31 @@ def _sections_payload(
         (f"{i + 1}.", step) for i, step in enumerate(next_steps.get(outcome, ["None."]))
     ] + [("Advisory", "These steps support a human decision; they are not an approval.")]
     sections["Risks and Limitations"] = [
-        ("Sample size", "Results come from small synthetic datasets (tens of cases); "
-         "they do not establish clinical safety, regulatory compliance, or production "
-         "readiness."),
-        ("Single run", "Unless repeated, scores reflect one run and natural variance "
-         "is not characterised."),
-        ("Estimates", "All cost figures and any estimated token usage are clearly "
-         "labelled and must not be read as measurements."),
-        ("Security scope", "Security results cover selected behaviours under controlled "
-         "conditions only - not a penetration test or comprehensive assessment."),
-        ("Assessments", "Enterprise readiness entries are human assessments and are "
-         "reported separately from measured benchmark results."),
+        (
+            "Sample size",
+            "Results come from small synthetic datasets (tens of cases); "
+            "they do not establish clinical safety, regulatory compliance, or production "
+            "readiness.",
+        ),
+        (
+            "Single run",
+            "Unless repeated, scores reflect one run and natural variance is not characterised.",
+        ),
+        (
+            "Estimates",
+            "All cost figures and any estimated token usage are clearly "
+            "labelled and must not be read as measurements.",
+        ),
+        (
+            "Security scope",
+            "Security results cover selected behaviours under controlled "
+            "conditions only - not a penetration test or comprehensive assessment.",
+        ),
+        (
+            "Assessments",
+            "Enterprise readiness entries are human assessments and are "
+            "reported separately from measured benchmark results.",
+        ),
     ]
     return {"outcome": outcome, "rationale": rationale, "sections": sections, "summary": summary}
 

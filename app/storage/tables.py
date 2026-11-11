@@ -29,8 +29,8 @@ class ModelRecord(Base):
     enabled: Mapped[bool] = mapped_column(Boolean, default=True)
     timeout_seconds: Mapped[int] = mapped_column(Integer, default=120)
     max_concurrent_requests: Mapped[int] = mapped_column(Integer, default=1)
-    generation_params: Mapped[str] = mapped_column(Text, default="{}")   # JSON
-    extra_headers: Mapped[str] = mapped_column(Text, default="{}")       # JSON, may hold creds
+    generation_params: Mapped[str] = mapped_column(Text, default="{}")  # JSON
+    extra_headers: Mapped[str] = mapped_column(Text, default="{}")  # JSON, may hold creds
     supports_streaming: Mapped[int | None] = mapped_column(Integer, nullable=True)  # 0/1/NULL
     reports_token_usage: Mapped[int | None] = mapped_column(Integer, nullable=True)
     last_health_check: Mapped[str | None] = mapped_column(Text, nullable=True)  # JSON
@@ -45,10 +45,10 @@ class EvaluationRunRecord(Base):
     model_id: Mapped[str] = mapped_column(String(64))
     model_identifier: Mapped[str] = mapped_column(Text)
     endpoint_label: Mapped[str] = mapped_column(Text)
-    dataset_names: Mapped[str] = mapped_column(Text)          # JSON list
-    dataset_versions: Mapped[str] = mapped_column(Text)       # JSON dict name->sha256
-    case_ids: Mapped[str] = mapped_column(Text)               # JSON list
-    generation_params: Mapped[str] = mapped_column(Text)      # JSON
+    dataset_names: Mapped[str] = mapped_column(Text)  # JSON list
+    dataset_versions: Mapped[str] = mapped_column(Text)  # JSON dict name->sha256
+    case_ids: Mapped[str] = mapped_column(Text)  # JSON list
+    generation_params: Mapped[str] = mapped_column(Text)  # JSON
     concurrency: Mapped[int] = mapped_column(Integer, default=1)
     scoring_version: Mapped[str] = mapped_column(String(32))
     app_version: Mapped[str] = mapped_column(String(32))
@@ -73,7 +73,7 @@ class CaseResultRecord(Base):
     status: Mapped[str] = mapped_column(String(8))
     score: Mapped[float] = mapped_column(Float)
     weight: Mapped[float] = mapped_column(Float, default=1.0)
-    field_results: Mapped[str] = mapped_column(Text, default="[]")   # JSON
+    field_results: Mapped[str] = mapped_column(Text, default="[]")  # JSON
     raw_response: Mapped[str | None] = mapped_column(Text, nullable=True)
     parsed_output: Mapped[str | None] = mapped_column(Text, nullable=True)  # JSON
     latency_ms: Mapped[float | None] = mapped_column(Float, nullable=True)

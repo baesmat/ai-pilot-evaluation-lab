@@ -5,7 +5,8 @@ from __future__ import annotations
 import uuid
 
 import pytest
-from api_helpers import (
+
+from tests.api_helpers import (
     FakeRunner,
     install_fake_runner,
     make_case_result,
@@ -16,14 +17,14 @@ from api_helpers import (
 
 @pytest.fixture()
 def api_env(tmp_path, monkeypatch):
-    from api_helpers import env_fresh_data_dir
+    from tests.api_helpers import env_fresh_data_dir
 
     yield from env_fresh_data_dir(tmp_path, monkeypatch)
 
 
 @pytest.fixture()
 def client(api_env):
-    from api_helpers import make_client
+    from tests.api_helpers import make_client
 
     yield from make_client()
 
@@ -96,7 +97,7 @@ def test_model_update_and_delete(client):
 
 
 def test_model_health_check_persists_result(client, monkeypatch):
-    from api_helpers import install_fake_inference
+    from tests.api_helpers import install_fake_inference
 
     model = make_model()
     install_fake_inference(monkeypatch, None)
@@ -218,10 +219,9 @@ def test_case_results_endpoint(client):
 
 
 def test_datasets_endpoints(client, monkeypatch):
-    from api_helpers import sample_case
-
     import app.api.results as results_module
     from app.models.benchmark import DatasetMeta
+    from tests.api_helpers import sample_case
 
     meta = DatasetMeta(
         name="ds_a",

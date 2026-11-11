@@ -35,7 +35,5 @@ def dataset_cases(name: str) -> list[dict]:
     try:
         cases = load_dataset(name)
     except ValueError as exc:
-        raise HTTPException(
-            status_code=status.HTTP_404_NOT_FOUND, detail=safe_error(exc)
-        ) from exc
+        raise HTTPException(status_code=status.HTTP_404_NOT_FOUND, detail=safe_error(exc)) from exc
     return [c.model_dump(mode="json") for c in cases]
