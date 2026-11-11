@@ -11,3 +11,8 @@ screenshots/*.tmp.png
 .ruff_cache/
 dist/
 build/
+
+# runtime artifacts
+data/
+*_server.log
+ui.log
