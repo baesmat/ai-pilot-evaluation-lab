@@ -59,4 +59,6 @@ jobs:
       # If a finding must be waived, pin a fixed version in pyproject.toml and
       # record the reason in the commit message — do not add continue-on-error.
       - name: Dependency audit (pip-audit)
-        run: pip-audit --strict --desc
+        run: |
+          pip freeze --exclude ai-pilot-evaluation-lab | grep -v '^-e' > /tmp/audit-reqs.txt
+          pip-audit --strict --no-deps -r /tmp/audit-reqs.txt
